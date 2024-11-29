@@ -1,5 +1,11 @@
 <?php
-// Ce code redirige vers une autre page, si nécessaire
-header("Location: home.php");  // Ajoutez "Location:" pour rediriger correctement
+// Affichage des erreurs
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Redirection vers home.php
+header("Location: home.php");
 exit;
 ?>
+
