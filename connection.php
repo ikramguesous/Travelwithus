@@ -16,9 +16,15 @@ try {
     // Connexion à la base de données avec gestion des erreurs
     $conn = new mysqli($host, $username, $password, $dbname);
 
+    // Vérification de la connexion
     if ($conn->connect_error) {
         throw new Exception("Erreur de connexion : " . $conn->connect_error);
     }
+
+    // Désactiver SSL
+    $conn->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);  // Désactiver la vérification du certificat SSL
+    $conn->ssl_set(NULL, NULL, NULL, NULL, NULL);  // Désactiver la connexion SSL
+
 } catch (Exception $e) {
     die("Une erreur est survenue : " . $e->getMessage());
 }
