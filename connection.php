@@ -6,7 +6,7 @@ $host = "serveurmysql.mysql.database.azure.com"; // Nom d'hôte Azure
 $username = "Ikram_Guessous"; // Nom d'utilisateur
 $password = "Poisson2002"; // Mot de passe
 $dbname = "ma_base"; // Nom de la base de données
-$ca_cert_path = "DigiCertGlobalRootCA.crt.pem"; // Chemin complet du certificat SSL
+$ca_cert_path = "/Users/mac/Downloads/DigiCertGlobalRootCA.crt.pem"; // Chemin complet du certificat SSL
 
 // Activer l'affichage des erreurs pour le débogage
 ini_set('display_errors', 1);
