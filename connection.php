@@ -28,7 +28,7 @@ if (isset($_POST['send'])) {
     $leaving = $_POST['leaving'];
 
     // Requête pour insérer les données dans la base
-    $sql = "INSERT INTO reservations (name, email, phone, address, location, guests, arrivals, leaving) 
+    $sql = "INSERT INTO book_form (name, email, phone, address, location, guests, arrivals, leaving) 
             VALUES ('$name', '$email', '$phone', '$address', '$location', '$guests', '$arrivals', '$leaving')";
 
     if ($conn->query($sql) === TRUE) {
