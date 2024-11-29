@@ -1,28 +1,38 @@
 <?php
+// connection.php
 
-$host = 'serveurmysql.mysql.database.azure.com'; // Remplacez par l'adresse de votre serveur MySQL Azure
-$username = 'Ikram_Guessous'; // Remplacez par votre nom d'utilisateur MySQL
-$password = 'Poisson2002'; // Remplacez par votre mot de passe MySQL
-$dbname = 'ma_base'; // Remplacez par le nom de votre base de données
-$ca_cert_path = './DigiCertGlobalRootCA.crt.pem';  // Remplacez par le chemin réel vers le certificat CA téléchargé
+// Configuration des paramètres de connexion à la base de données
+$host = "serveurmysql.mysql.database.azure.com"; // Nom d'hôte Azure
+$username = "Ikram_Guessous"; // Nom d'utilisateur
+$password = "Poisson2002"; // Mot de passe
+$dbname = "ma_base"; // Nom de la base de données
+$ca_cert_path = "DigiCertGlobalRootCA.crt.pem"; // Chemin complet du certificat SSL
 
-// Connexion à la base de données avec SSL
-$conn = new mysqli($host, $username, $password, $dbname, 3306);
+// Activer l'affichage des erreurs pour le débogage
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// Vérification de la connexion de base
-if ($conn->connect_error) {
-    die("Erreur de connexion : " . $conn->connect_error);
+try {
+    // Connexion à la base de données avec SSL
+    $conn = new mysqli($host, $username, $password, $dbname, 3306);
+
+    // Vérification de la connexion
+    if ($conn->connect_error) {
+        throw new Exception("Erreur de connexion : " . $conn->connect_error);
+    }
+
+    // Configuration SSL
+    $conn->ssl_set(NULL, NULL, $ca_cert_path, NULL, NULL); // Utilisation du certificat CA
+
+    // Essayer de se connecter à la base de données avec SSL
+    if (!$conn->real_connect($host, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL)) {
+        throw new Exception("Erreur de connexion SSL : " . $conn->connect_error);
+    }
+
+    echo "Connexion réussie avec SSL.";
+
+} catch (Exception $e) {
+    die("Une erreur est survenue : " . $e->getMessage());
 }
-
-// Configuration SSL avec le certificat CA
-$conn->ssl_set(NULL, NULL, $ca_cert_path, NULL, NULL);  // Appliquez le certificat CA pour la connexion SSL
-
-// Tentative de connexion avec SSL activé
-if (!$conn->real_connect($host, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL)) {
-    die("Erreur de connexion SSL : " . $conn->connect_error);
-}
-
-// Si la connexion SSL est réussie
-echo "Connexion réussie avec SSL.";
-
 ?>
