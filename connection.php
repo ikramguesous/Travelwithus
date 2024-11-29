@@ -3,7 +3,7 @@
 
 // Configuration des paramètres de connexion à la base de données
 $host = "serveurmysql.mysql.database.azure.com"; // Nom d'hôte Azure
-$username = "Ikram_Guessous@serveurmysql"; // Nom d'utilisateur
+$username = "Ikram_Guessous"; // Nom d'utilisateur
 $password = "Poisson2002"; // Mot de passe
 $dbname = "ma_base"; // Nom de la base de données
 
