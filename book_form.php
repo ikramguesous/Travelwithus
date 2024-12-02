@@ -11,11 +11,15 @@ if (isset($_POST['send'])) {
         $address = $_POST['address'] ?? '';
         $location = $_POST['location'] ?? '';
         $guests = $_POST['guests'] ?? 0;
-    
 
-        // Vérifier les champs obligatoires
+        // Vérifier les champs obligatoires (Nom, Email, Téléphone)
         if (empty($name) || empty($email) || empty($phone)) {
             throw new Exception("Les champs Nom, Email et Téléphone sont obligatoires.");
+        }
+
+        // Si des champs sont vides, ne pas insérer dans la base de données
+        if (empty($name) || empty($email) || empty($phone) || empty($address) || empty($location) || empty($guests)) {
+            throw new Exception("Tous les champs sont requis.");
         }
 
         // Préparer la requête
@@ -26,7 +30,7 @@ if (isset($_POST['send'])) {
         }
 
         // Lier et exécuter la requête
-        $stmt->bind_param("ssssssss", $name, $email, $phone, $address, $location, $guests);
+        $stmt->bind_param("sssssi", $name, $email, $phone, $address, $location, $guests);  // Remarquez le 'i' pour guests (entier)
         if ($stmt->execute()) {
             echo "Réservation enregistrée avec succès.";
         } else {
