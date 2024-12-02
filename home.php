@@ -8,7 +8,26 @@
   <title>home</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
   <link rel="stylesheet" href="style.css">
-  
+  <style>
+    .see-more-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.see-more-btn .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--main-color);
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+
+
+  </style>
 </head>
 
 <body>
@@ -92,7 +111,6 @@
             <div class="content">
                 <h3>Marrakech</h3>
                 <p><em>"Relax and rejuvenate in Morocco’s serene retreats, offering the perfect balance of nature and tranquility."</em></p>
-                <a href="book.php" class="btn">Book Now</a>
             </div>
         </div>
         <div class="box">
@@ -102,7 +120,6 @@
             <div class="content">
                 <h3>Essaouira</h3>
                 <p><em>"Immerse yourself in the vibrant culture and rich history of Morocco with our guided tours to iconic destinations."</em></p>
-                <a href="book.php" class="btn">Book Now</a>
             </div>
         </div>
         <div class="box">
@@ -112,9 +129,11 @@
             <div class="content">
                 <h3>Tangier</h3>
                 <p><em>"Discover breathtaking landscapes and thrilling activities. Perfect for adventure seekers to explore Morocco."</em></p>
-                <a href="book.php" class="btn">Book Now</a>
             </div>
         </div>
+    </div>
+    <div class="see-more-btn">
+        <a href="package.php" class="btn">See More</a>
     </div>
 </section>
 <section class="home-offer">
