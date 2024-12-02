@@ -69,7 +69,6 @@
                 <span>How Many :</span>
                 <input type="number" placeholder="number of guests" name="guests"> 
           </div>
-
         </div>
         <input type="submit" value="submit" class="btn" name="send">
     </form>
