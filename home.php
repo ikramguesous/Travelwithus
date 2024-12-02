@@ -102,7 +102,7 @@
 </section>
 
 <section class="home-packages">
-    <h1 class="heading-title">Our Packages</h1>
+    <h1 class="heading-title">Some Of Our Packages</h1>
     <div class="box-container">
         <div class="box">
             <div class="image">
