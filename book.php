@@ -69,14 +69,7 @@
                 <span>How Many :</span>
                 <input type="number" placeholder="number of guests" name="guests"> 
           </div>
-          <div class="inputBox">
-    <span>Arrivals :</span>
-    <input type="date" placeholder="arrivals" name="arrivals"> 
-</div>
-<div class="inputBox">
-    <span>Leaving :</span>
-    <input type="date" placeholder="leaving" name="leaving"> 
-</div>
+
         </div>
         <input type="submit" value="submit" class="btn" name="send">
     </form>
