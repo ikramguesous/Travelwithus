@@ -11,8 +11,7 @@ if (isset($_POST['send'])) {
         $address = $_POST['address'] ?? '';
         $location = $_POST['location'] ?? '';
         $guests = $_POST['guests'] ?? 0;
-        $arrivals = $_POST['arrivals'] ?? '';
-        $leaving = $_POST['leaving'] ?? '';
+    
 
         // Vérifier les champs obligatoires
         if (empty($name) || empty($email) || empty($phone)) {
@@ -20,14 +19,14 @@ if (isset($_POST['send'])) {
         }
 
         // Préparer la requête
-        $stmt = $conn->prepare("INSERT INTO book_form (name, email, phone, address, location, guests, arrivals, leaving) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO book_form (name, email, phone, address, location, guests) 
+                                VALUES (?, ?, ?, ?, ?, ?)");
         if (!$stmt) {
             throw new Exception("Erreur lors de la préparation de la requête : " . $conn->error);
         }
 
         // Lier et exécuter la requête
-        $stmt->bind_param("ssssssss", $name, $email, $phone, $address, $location, $guests, $arrivals, $leaving);
+        $stmt->bind_param("ssssssss", $name, $email, $phone, $address, $location, $guests);
         if ($stmt->execute()) {
             echo "Réservation enregistrée avec succès.";
         } else {
