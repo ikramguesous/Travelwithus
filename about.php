@@ -211,6 +211,7 @@
   <nav class="navbar">
     <a href="home.php">Home</a>
     <a href="About.php">About</a>
+    <a href="package.php">Package</a>
     <a href="Book.php">Book</a>
   </nav>
   <div id="menu-btn" class="fas fa-bars"></div>
