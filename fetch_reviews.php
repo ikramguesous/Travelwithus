@@ -15,7 +15,7 @@ try {
     }
 
     // Requête pour récupérer les avis
-    $query = "SELECT name, role, review, rating, image FROM reviews";
+    $query = "SELECT name, review, rating, image FROM reviews";
     $result = $conn->query($query);
 
     if (!$result) {
@@ -34,7 +34,6 @@ try {
             echo '</div>';
             echo '<p><em>"' . htmlspecialchars($row['review']) . '"</em></p>';
             echo '<h3>' . htmlspecialchars($row['name']) . '</h3>';
-            echo '<span>' . htmlspecialchars($row['role']) . '</span>';
             echo '<img src="' . htmlspecialchars($row['image']) . '" alt="Client photo">';
             echo '</div>';
         }
