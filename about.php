@@ -8,7 +8,7 @@
   <title>about</title>
   <link rel="stylesheet" href="style.css?v=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
-  <style>
+<style>
     .heading{
     background-size: cover !important;
     background-position: center !important;
@@ -199,87 +199,6 @@
 .chat-form button:hover {
     background-color: var(--main-color);
 }
-.chat-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 350px;
-    max-width: 100%;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    height: 400px;
-}
-
-.chat-header {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    font-size: 18px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.chat-box {
-    flex-grow: 1;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-bottom: 1px solid #ddd;
-    overflow-y: auto;
-}
-
-.chat-bubble {
-    max-width: 80%;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 10px;
-    line-height: 1.4;
-}
-
-.user-message {
-    background-color: #007bff;
-    color: white;
-    align-self: flex-end;
-    margin-left: auto;
-}
-
-.bot-message {
-    background-color: #e0e0e0;
-    align-self: flex-start;
-}
-
-.chat-form {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-}
-
-.chat-form input {
-    width: 80%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    margin-right: 10px;
-}
-
-.chat-form button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.chat-form button:hover {
-    background-color: #0056b3;
-}
-
 
 </style>
   
@@ -339,13 +258,8 @@
     </div>
   </div>
 </section>
-<section class="chat-container">
-    <div class="chat-header">
-        <h3>Chat with Us</h3>
-    </div>
-    <div class="chat-box">
-        <!-- Les messages vont s'afficher ici -->
-    </div>
+
+
 <section class="footer">
   <div class="box-container">
     <div class="box">
@@ -402,7 +316,7 @@ var swiper = new Swiper(".reviews-slider", {
             reviews.forEach(review => {
                 const stars = '<i class="fas fa-star"></i>'.repeat(review.stars);
                 
-                const reviewHTML = `
+                const reviewHTML = 
                     <div class="swiper-slide slide">
                         <div class="stars">
                             ${stars}
@@ -411,7 +325,7 @@ var swiper = new Swiper(".reviews-slider", {
                         <h3>${review.client_name}</h3>
                         <img src="${review.client_image}" alt="">
                     </div>
-                `;
+                ;
                 reviewsContainer.innerHTML += reviewHTML;
             });
 
@@ -429,6 +343,7 @@ var swiper = new Swiper(".reviews-slider", {
     // Charger les avis au chargement de la page
     document.addEventListener('DOMContentLoaded', fetchReviews);
 </script>
+
 
 <script src="script.js"></script>
 <?php
@@ -507,4 +422,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 
 </html>
-
