@@ -257,6 +257,40 @@
       <?php include 'fetch_reviews.php'; ?>
     </div>
   </div>
+  <div style="text-align: center; margin-top: 20px;">
+  <button id="openModal">Give Us Your Review</button>
+</div>
+
+<!-- Boîte modale -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h3>Give us your review</h3>
+    <form method="POST" action="fetch_reviews.php">
+      <div>
+        <label for="name">Nom:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label for="stars">Étoiles:</label>
+        <select id="stars" name="stars" required>
+          <option value="5">⭐⭐⭐⭐⭐</option>
+          <option value="4">⭐⭐⭐⭐</option>
+          <option value="3">⭐⭐⭐</option>
+          <option value="2">⭐⭐</option>
+          <option value="1">⭐</option>
+        </select>
+      </div>
+      <div>
+        <label for="review">Avis:</label>
+        <textarea id="review" name="review" rows="4" required></textarea>
+      </div>
+      <div>
+        <button type="submit">Envoyer</button>
+      </div>
+    </form>
+  </div>
+</div>
 </section>
 
 <!-- Bouton pour déclencher le formulaire -->
