@@ -158,7 +158,7 @@ mysqli_close($connection);
   <div id="menu-btn" class="fas fa-bars"></div>
 </section>
 
-<div class="heading" style="background:url(RRRR.png) no-repeat" >
+<div class="heading" style="background:url(images/RRRR.png) no-repeat" >
    <h1>Package</h1>
 </div>
 
