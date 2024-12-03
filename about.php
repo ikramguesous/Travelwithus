@@ -251,79 +251,10 @@
 </section>
 
 <section class="reviews">
-  <h1 class="heading-title" >Client reviews</h1>
-
+  <h1 class="heading-title">Client Reviews</h1>
   <div class="swiper reviews-slider">
     <div class="swiper-wrapper">
-      <div class="swiper-slide slide">
-        <div class="stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-        </div>
-        <p><em>"This was an incredible experience! The service was top-notch, and every detail was perfectly planned."</em></p>
-        <h3>Joe</h3>
-        <span>Traveler</span>
-        <img src="images/shutterstock_1121116859-1024x73233.jpg" alt="">
-
-      </div>
-      <div class="swiper-slide slide">
-        <div class="stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-        </div>
-        <p><em>"Great experience overall, but there’s some room for improvement. Would still recommend it to others!"</em></p>
-        <h3>Jasmine</h3>
-        <span>Traveler</span>
-        <img src="images/c878627eeec0b3dcd4630108ff23ccd6.jpg" alt="">
-      </div>
-
-      <div class="swiper-slide slide">
-        <div class="stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-        </div>
-        <p><em>"It was an average experience. Some things were great, but others fell short of expectations."</em></p>
-        <h3>Jess</h3>
-        <span>Traveler</span>
-        <img src="images/d0ec7c133990c5dd617a4e55239ee01a.jpg" alt="">
-      </div>
-
-      <div class="swiper-slide slide">
-        <div class="stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-        </div>
-        <p><em>"Absolutely amazing! The team went above and beyond to make our trip unforgettable."</em></p>
-        <h3>Joey</h3>
-        <span>Traveler</span>
-        <img src="images/depositphotos_23493623-stock-photo-handsome-young-man.jpg" alt="">
-      </div>
-
-      <div class="swiper-slide slide">
-        <div class="stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-        </div>
-        <p><em>"Very good service! A few small details could have been better, but I’m happy with my experience."</em></p>
-        <h3>Maeva</h3>
-        <span>Traveler</span>
-        <img src="images/d413c1425640bd85c2f144c4ea32c43a.jpg" alt="">
-      </div>
-
-
-      
-
+      <?php include 'fetch_reviews.php'; ?>
     </div>
   </div>
 </section>
