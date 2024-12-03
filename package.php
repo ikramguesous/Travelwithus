@@ -172,26 +172,36 @@ mysqli_close($connection);
         </form>
     </div>
 </section>
-<section>
 <!-- Section pour afficher les packages -->
-<div class="packages">
-        <?php if (!empty($packages)): ?>
-            <?php foreach ($packages as $package): ?>
-                <div class="package">
-                    <img src="images/<?php echo htmlspecialchars($package['image']); ?>" alt="<?php echo htmlspecialchars($package['name']); ?>">
-                    <h2><?php echo htmlspecialchars($package['name']); ?></h2>
-                    <p><?php echo htmlspecialchars($package['description']); ?></p>
-                    <p>Prix : <?php echo htmlspecialchars($package['price']); ?> €</p>
-                    <p>Places disponibles : <?php echo htmlspecialchars($package['places_available']); ?></p>
-                    <p>Date de disponibilité : <?php echo htmlspecialchars($package['availability_date']); ?></p>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Aucun package trouvé.</p>
-        <?php endif; ?>
+<section class="package-list">
+    <div class="packages">
+        <?php 
+        $formattedDate = $date ? date('Y-m-d', strtotime($date)) : null;
+        foreach ($packages as $row): 
+            $isAvailable = !$date || strtotime($row['availability_date']) == strtotime($formattedDate);
+            $placesRestantes = (int) $row['places_available'];
+        ?>
+            <div class="package <?php echo ($isAvailable && $placesRestantes > 0) ? '' : 'grayscale'; ?>">
+                <img src="images/<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                <h2><?php echo htmlspecialchars($row['name']); ?></h2>
+                <p><?php echo htmlspecialchars($row['description']); ?></p>
+                <p><strong>Price: MAD<?php echo number_format($row['price'], 2); ?></strong></p>
+                <p><strong>Places disponibles : <?php echo $placesRestantes; ?></strong></p>
+
+                <?php if ($isAvailable && $placesRestantes > 0): ?>
+                    <!-- Lien vers book.php avec l'ID du package -->
+                    <a href="book.php?package_id=<?php echo urlencode($row['id_package']); ?>" style="text-decoration: none;">
+                        <button type="button">Book Now</button>
+                    </a>
+                <?php elseif ($placesRestantes <= 0): ?>
+                    <p class="unavailable">Sold Out</p>
+                <?php else: ?>
+                    <p class="unavailable">Unavailable for the selected date</p>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
     </div>
-    </section>
-<!-- Section Footer -->
+</section>
 <section class="footer">
   <div class="box-container">
     <div class="box">
