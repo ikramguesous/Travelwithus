@@ -91,7 +91,7 @@ mysqli_close($connection);
         background: white;
         border: 1px solid #ddd;
         border-radius: 10px;
-        width: 500px;
+        width: 390px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         text-align: center;
         overflow: hidden;
