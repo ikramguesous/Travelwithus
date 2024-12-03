@@ -257,77 +257,43 @@
       <?php include 'fetch_reviews.php'; ?>
     </div>
   </div>
-  <div style="text-align: center; margin-top: 20px;">
-  <button id="openModal">Give Us Your Review</button>
-</div>
 
-<!-- Boîte modale -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeModal">&times;</span>
-    <h3>Give us your review</h3>
-    <form method="POST" action="fetch_reviews.php">
-      <div>
-        <label for="name">Nom:</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div>
-        <label for="stars">Étoiles:</label>
-        <select id="stars" name="stars" required>
-          <option value="5">⭐⭐⭐⭐⭐</option>
-          <option value="4">⭐⭐⭐⭐</option>
-          <option value="3">⭐⭐⭐</option>
-          <option value="2">⭐⭐</option>
-          <option value="1">⭐</option>
-        </select>
-      </div>
-      <div>
-        <label for="review">Avis:</label>
-        <textarea id="review" name="review" rows="4" required></textarea>
-      </div>
-      <div>
-        <button type="submit">Envoyer</button>
-      </div>
-    </form>
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="openModal">Give Us Your Review</button>
   </div>
-</div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h3>Give us your review</h3>
+      <form method="POST" action="fetch_reviews.php">
+        <div>
+          <label for="name">Nom:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+          <label for="stars">Étoiles:</label>
+          <select id="stars" name="stars" required>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="1">⭐</option>
+          </select>
+        </div>
+        <div>
+          <label for="review">Avis:</label>
+          <textarea id="review" name="review" rows="4" required></textarea>
+        </div>
+        <div>
+          <button type="submit">Envoyer</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </section>
 
-<!-- Bouton pour déclencher le formulaire -->
-<div style="text-align: center; margin-top: 20px;">
-  <button id="openModal">Give Us Your Review</button>
-</div>
-
-<!-- Boîte modale -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeModal">&times;</span>
-    <h3>Give us your review</h3>
-    <form method="POST" action="fetch_reviews.php">
-      <div>
-        <label for="name">Nom:</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div>
-        <label for="stars">Étoiles:</label>
-        <select id="stars" name="stars" required>
-          <option value="5">⭐⭐⭐⭐⭐</option>
-          <option value="4">⭐⭐⭐⭐</option>
-          <option value="3">⭐⭐⭐</option>
-          <option value="2">⭐⭐</option>
-          <option value="1">⭐</option>
-        </select>
-      </div>
-      <div>
-        <label for="review">Avis:</label>
-        <textarea id="review" name="review" rows="4" required></textarea>
-      </div>
-      <div>
-        <button type="submit">Envoyer</button>
-      </div>
-    </form>
-  </div>
-</div>
 
 
 <section class="footer">
@@ -360,43 +326,35 @@
 
 <!-- Initialize Swiper -->
 <script>
-var swiper = new Swiper(".reviews-slider", {
+  var swiper = new Swiper(".reviews-slider", {
     loop: true,
     spaceBetween: 20,
     autoHeight: true,
     grabCursor: true,
-    slidesPerView: 5, // Valeur par défaut
-    breakpoints: {
-        640: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
-    },
-});
-
-</script>
-<script>
-  // Récupération des éléments
-  const modal = document.getElementById('modal');
-  const openModalBtn = document.getElementById('openModal');
-  const closeModalBtn = document.getElementById('closeModal');
-
-  // Ouvrir la modale
-  openModalBtn.addEventListener('click', () => {
-    modal.style.display = 'flex';
+    slidesPerView: 5,
   });
 
-  // Fermer la modale
-  closeModalBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
+  // Modal functionality
+  var modal = document.getElementById("modal");
+  var openModalButton = document.getElementById("openModal");
+  var closeModalButton = document.getElementById("closeModal");
 
-  // Fermer la modale en cliquant en dehors
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
+  openModalButton.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  closeModalButton.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // Close modal if clicked outside the modal
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
     }
-  });
+  }
 </script>
+
 <script>
     async function fetchReviews() {
         try {
