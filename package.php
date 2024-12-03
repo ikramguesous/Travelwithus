@@ -1,18 +1,38 @@
 <?php
-// Connexion à la base de données Azure
-$server = 'serveurmysql.mysql.database.azure.com'; // Adresse du serveur MySQL Azure
-$username = 'Ikram_Guessous';              // Nom d'utilisateur
-$password = 'Poisson2002';                     // Mot de passe
-$database = 'ma_base';                           // Nom de votre base de données
-$port = 3306;                                    // Port MySQL (par défaut)
+// Configuration de la base de données
+$host = 'votre_hote'; // Exemple : localhost
+$username = 'votre_nom_utilisateur';
+$password = 'votre_mot_de_passe';
+$database = 'votre_base_de_donnees';
+$connection = mysqli_connect($host, $username, $password, $database);
 
-// Connexion à la base de données
-$connection = mysqli_connect($server, $username, $password, $database, $port);
-
-// Vérifier la connexion
+// Vérification de la connexion
 if (!$connection) {
-    die('Connection failed: ' . mysqli_connect_error());
+    die('Erreur de connexion : ' . mysqli_connect_error());
 }
+
+// Récupération de la date si fournie
+$date = isset($_GET['date']) ? $_GET['date'] : null;
+
+// Requête SQL
+$sql = "SELECT * FROM packages";
+if ($date) {
+    $sql .= " WHERE availability_date = '" . mysqli_real_escape_string($connection, $date) . "'";
+}
+
+// Exécution de la requête
+$result = mysqli_query($connection, $sql);
+
+// Vérification des résultats
+$packages = [];
+if ($result && mysqli_num_rows($result) > 0) {
+    $packages = mysqli_fetch_all($result, MYSQLI_ASSOC);
+} else {
+    echo "<p>Aucun package disponible pour la date sélectionnée.</p>";
+}
+
+// Fermeture de la connexion à la base de données
+mysqli_close($connection);
 ?>
 
 <html lang="en">
@@ -152,38 +172,25 @@ if (!$connection) {
         </form>
     </div>
 </section>
-
+<section>
 <!-- Section pour afficher les packages -->
-<section class="package-list">
-    <div class="packages">
-        <?php 
-        $formattedDate = $date ? date('Y-m-d', strtotime($date)) : null;
-        foreach ($packages as $row): 
-            $isAvailable = !$date || strtotime($row['availability_date']) == strtotime($formattedDate);
-            $placesRestantes = (int) $row['places_available'];
-        ?>
-            <div class="package <?php echo ($isAvailable && $placesRestantes > 0) ? '' : 'grayscale'; ?>">
-                <img src="images/<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
-                <h2><?php echo htmlspecialchars($row['name']); ?></h2>
-                <p><?php echo htmlspecialchars($row['description']); ?></p>
-                <p><strong>Price: MAD<?php echo number_format($row['price'], 2); ?></strong></p>
-                <p><strong>Places disponibles : <?php echo $placesRestantes; ?></strong></p>
-
-                <?php if ($isAvailable && $placesRestantes > 0): ?>
-                    <!-- Lien vers book.php avec l'ID du package -->
-                    <a href="book.php?package_id=<?php echo urlencode($row['id_package']); ?>" style="text-decoration: none;">
-                        <button type="button">Book Now</button>
-                    </a>
-                <?php elseif ($placesRestantes <= 0): ?>
-                    <p class="unavailable">Sold Out</p>
-                <?php else: ?>
-                    <p class="unavailable">Unavailable for the selected date</p>
-                <?php endif; ?>
-            </div>
-        <?php endforeach; ?>
+<div class="packages">
+        <?php if (!empty($packages)): ?>
+            <?php foreach ($packages as $package): ?>
+                <div class="package">
+                    <img src="images/<?php echo htmlspecialchars($package['image']); ?>" alt="<?php echo htmlspecialchars($package['name']); ?>">
+                    <h2><?php echo htmlspecialchars($package['name']); ?></h2>
+                    <p><?php echo htmlspecialchars($package['description']); ?></p>
+                    <p>Prix : <?php echo htmlspecialchars($package['price']); ?> €</p>
+                    <p>Places disponibles : <?php echo htmlspecialchars($package['places_available']); ?></p>
+                    <p>Date de disponibilité : <?php echo htmlspecialchars($package['availability_date']); ?></p>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Aucun package trouvé.</p>
+        <?php endif; ?>
     </div>
-</section>
-
+    </section>
 <!-- Section Footer -->
 <section class="footer">
   <div class="box-container">
