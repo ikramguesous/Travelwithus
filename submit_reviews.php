@@ -5,57 +5,52 @@ $username = "Ikram_Guessous";
 $password = "Poisson2002";
 $database = "ma_base";
 
-// Vérifier si le formulaire a été soumis
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_reviews'])) {
-    // Récupérer les données envoyées par le formulaire
-    $name = isset($_POST['client_name']) ? trim($_POST['client_name']) : '';
-    $review_text = isset($_POST['review_text']) ? trim($_POST['review_text']) : '';
-    $stars = isset($_POST['rating']) ? intval($_POST['rating']) : 0;
-    $image = isset($_POST['client_image']) ? trim($_POST['client_image']) : '';
+try {
+    // Connexion à la base de données MySQL
+    $conn = new mysqli($servername, $username, $password, $database, 3306);
 
-    // Vérifier que les champs obligatoires sont présents
-    if (empty($name) || empty($review_text) || $stars < 1 || $stars > 5) {
-        echo "Tous les champs doivent être remplis correctement.";
-        exit;
+    // Vérification de la connexion
+    if ($conn->connect_error) {
+        throw new Exception("Connexion échouée : " . $conn->connect_error);
     }
 
-    try {
-        // Connexion à la base de données
-        $conn = new mysqli($servername, $username, $password, $database, 3306);
+    // Vérifier si le formulaire a été soumis
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $name = $_POST['name'];
+        $review = $_POST['review'];
+        $rating = $_POST['rating'];
 
-       // Vérification de la connexion
-if ($conn->connect_error) {
-    echo "Erreur de connexion : " . $conn->connect_error;
-    exit;
-} else {
-    echo "Connexion réussie !";  // Message de confirmation
-}
+        // Gérer l'image (si une image a été téléchargée)
+        $image = ""; // Valeur par défaut si aucune image n'est fournie
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+            // Déplacer l'image téléchargée vers un répertoire spécifique
+            $uploadDir = "uploads/";
+            $uploadFile = $uploadDir . basename($_FILES['image']['name']);
 
-
-        // Préparer la requête d'insertion avec des paramètres liés
-        $stmt = $conn->prepare("INSERT INTO reviews (client_name, review_text, stars, client_image) 
-                                VALUES (?, ?, ?, ?)");
-        if ($stmt === false) {
-            throw new Exception("Erreur de préparation de la requête : " . $conn->error);
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
+                $image = $uploadFile; // Stocker le chemin de l'image
+            } else {
+                throw new Exception("Erreur lors du téléchargement de l'image.");
+            }
         }
 
-        // Lier les paramètres à la requête préparée
-        $stmt->bind_param("ssis", $name, $review_text, $stars, $image);
-
-        // Exécuter la requête
+        // Insérer les données dans la base de données
+        $stmt = $conn->prepare("INSERT INTO reviews (client_name, review_text, stars, client_image) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssis", $name, $review, $rating, $image);
+        
         if ($stmt->execute()) {
-            echo "Avis ajouté avec succès!";
+            echo "Avis soumis avec succès !";
         } else {
-            echo "Erreur lors de l'ajout de l'avis: " . $stmt->error;
+            throw new Exception("Erreur lors de l'insertion de l'avis : " . $stmt->error);
         }
 
-        // Fermer la requête préparée
+        // Fermer le statement
         $stmt->close();
-    } catch (Exception $e) {
-        echo "Une erreur est survenue : " . $e->getMessage();
-    } finally {
-        // Fermer la connexion à la base de données
-        $conn->close();
     }
+} catch (Exception $e) {
+    echo "Une erreur est survenue : " . $e->getMessage();
+} finally {
+    // Fermer la connexion à la base de données
+    $conn->close();
 }
 ?>
