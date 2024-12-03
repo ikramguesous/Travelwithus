@@ -11,26 +11,22 @@ if (!$connection) {
     die('Erreur de connexion : ' . mysqli_connect_error());
 }
 
-// Récupération de la date si fournie
+// Récupérer la date du formulaire, si définie
 $date = isset($_GET['date']) ? $_GET['date'] : null;
 
-// Requête SQL
-$sql = "SELECT * FROM packages";
-if ($date) {
-    $sql .= " WHERE availability_date = '" . mysqli_real_escape_string($connection, $date) . "'";
-}
-
-// Exécution de la requête
-$result = mysqli_query($connection, $sql);
-
-// Vérification des résultats
+// Initialisation des résultats
 $packages = [];
-if ($result && mysqli_num_rows($result) > 0) {
+
+// Récupérer tous les packages
+$query = "SELECT * FROM packages";
+$result = mysqli_query($connection, $query);
+
+if ($result) {
+    // Récupérer tous les packages
     $packages = mysqli_fetch_all($result, MYSQLI_ASSOC);
 } else {
-    echo "<p>Aucun package disponible pour la date sélectionnée.</p>";
+    die('Query failed: ' . mysqli_error($connection));
 }
-
 // Fermeture de la connexion à la base de données
 mysqli_close($connection);
 ?>
