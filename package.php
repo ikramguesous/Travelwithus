@@ -1,9 +1,9 @@
 <?php
 // Configuration de la base de données
-$host = 'votre_hote'; // Exemple : localhost
-$username = 'votre_nom_utilisateur';
-$password = 'votre_mot_de_passe';
-$database = 'votre_base_de_donnees';
+$host = 'serveurmysql.mysql.database.azure.com'; // Exemple : localhost
+$username = 'Ikram_Guessous';
+$password = 'Poisson2002';
+$database = 'ma_base';
 $connection = mysqli_connect($host, $username, $password, $database);
 
 // Vérification de la connexion
