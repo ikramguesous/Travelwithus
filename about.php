@@ -331,7 +331,8 @@
       <option value="5">5 Stars</option>
     </select><br>
     <input type="text" name="client_image" placeholder="Image URL (optional)"><br>
-    <button type="submit" name="submit_review">Submit Review</button>
+    <button type="submit" name="submit_reviews">Submit Review</button>
+
   </form>
 </div>
 </section>
