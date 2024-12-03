@@ -323,7 +323,6 @@ var swiper = new Swiper(".reviews-slider", {
                         </div>
                         <p><em>"${review.review_text}"</em></p>
                         <h3>${review.client_name}</h3>
-                        <span>${review.client_role}</span>
                         <img src="${review.client_image}" alt="">
                     </div>
                 `;
