@@ -5,11 +5,19 @@ $username = "Ikram_Guessous";
 $password = "Poisson2002";
 $database = "ma_base";
 
+// Vérifier si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_reviews'])) {
-    $name = $_POST['client_name']; // Nom du client
-    $review_text = $_POST['review_text']; // Texte de l'avis
-    $stars = $_POST['rating']; // Note en étoiles (1 à 5)
-    $image = $_POST['client_image']; // URL ou chemin de l'image du client
+    // Récupérer les données envoyées par le formulaire
+    $name = isset($_POST['client_name']) ? trim($_POST['client_name']) : '';
+    $review_text = isset($_POST['review_text']) ? trim($_POST['review_text']) : '';
+    $stars = isset($_POST['rating']) ? intval($_POST['rating']) : 0;
+    $image = isset($_POST['client_image']) ? trim($_POST['client_image']) : '';
+
+    // Vérifier que les champs obligatoires sont présents
+    if (empty($name) || empty($review_text) || $stars < 1 || $stars > 5) {
+        echo "Tous les champs doivent être remplis correctement.";
+        exit;
+    }
 
     try {
         // Connexion à la base de données
@@ -20,24 +28,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_reviews'])) {
             throw new Exception("Connexion échouée : " . $conn->connect_error);
         }
 
-        // Nettoyer les données pour prévenir les injections SQL
-        $name = mysqli_real_escape_string($conn, $name);
-        $review_text = mysqli_real_escape_string($conn, $review_text);
-        $stars = intval($stars);
-        $image = mysqli_real_escape_string($conn, $image);
+        // Préparer la requête d'insertion avec des paramètres liés
+        $stmt = $conn->prepare("INSERT INTO reviews (client_name, review_text, stars, client_image) 
+                                VALUES (?, ?, ?, ?)");
+        if ($stmt === false) {
+            throw new Exception("Erreur de préparation de la requête : " . $conn->error);
+        }
 
-        // Requête d'insertion de l'avis
-        $query = "INSERT INTO reviews (client_name, review_text, stars, client_image) 
-          VALUES ('$name', '$review_text', $stars, '$image')";
+        // Lier les paramètres à la requête préparée
+        $stmt->bind_param("ssis", $name, $review_text, $stars, $image);
 
-        if (mysqli_query($conn, $query)) {
+        // Exécuter la requête
+        if ($stmt->execute()) {
             echo "Avis ajouté avec succès!";
         } else {
-            echo "Erreur lors de l'ajout de l'avis: " . mysqli_error($conn);
+            echo "Erreur lors de l'ajout de l'avis: " . $stmt->error;
         }
+
+        // Fermer la requête préparée
+        $stmt->close();
     } catch (Exception $e) {
         echo "Une erreur est survenue : " . $e->getMessage();
     } finally {
+        // Fermer la connexion à la base de données
         $conn->close();
     }
 }
