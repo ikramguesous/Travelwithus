@@ -2,7 +2,7 @@
 // Connect to the database
 include 'connection.php'; // Ensure to include your DB connection file
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_reviews'])) {
     $review_text = $_POST['review_text'];
 
     // Clean the data to prevent SQL injection
