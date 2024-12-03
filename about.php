@@ -317,13 +317,22 @@
   <button class="open-form-btn" onclick="toggleReviewForm()">Give Your Review</button>
 
   <!-- Hidden review form -->
-  <div class="review-form" id="review-form" style="display:none;">
-    <form method="POST" action="submit_reviews.php">
-      <textarea name="review_text" placeholder="Write your review here..." required></textarea>
-      <button type="submit" name="submit_review">Submit</button>
-    </form>
-    <button class="close-form-btn" onclick="toggleReviewForm()">Close</button>
-  </div>
+  <div class="review-form">
+  <form method="POST" action="submit_reviews.php">
+    <input type="text" name="client_name" placeholder="Your Name" required><br>
+    <textarea name="review_text" placeholder="Write your review..." required></textarea><br>
+    <label for="rating">Rating:</label>
+    <select name="rating" required>
+      <option value="1">1 Star</option>
+      <option value="2">2 Stars</option>
+      <option value="3">3 Stars</option>
+      <option value="4">4 Stars</option>
+      <option value="5">5 Stars</option>
+    </select><br>
+    <input type="text" name="client_image" placeholder="Image URL (optional)"><br>
+    <button type="submit" name="submit_review">Submit Review</button>
+  </form>
+</div>
 </section>
 <section class="footer">
   <div class="box-container">
