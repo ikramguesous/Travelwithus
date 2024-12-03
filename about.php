@@ -8,7 +8,7 @@
   <title>about</title>
   <link rel="stylesheet" href="style.css?v=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
-<style>
+  <style>
     .heading{
     background-size: cover !important;
     background-position: center !important;
@@ -214,6 +214,7 @@
     flex-direction: column;
     height: 400px;
 }
+
 .chat-header {
     background-color: #007bff;
     color: #fff;
@@ -278,44 +279,6 @@
 .chat-form button:hover {
     background-color: #0056b3;
 }
-.feedback-form {
-    background-color: #f9f9f9;
-    padding: 20px;
-    margin-top: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: auto;
-}
-.feedback-form h3 {
-    font-size: 24px;
-    margin-bottom: 15px;
-}
-
-.feedback-form textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    height: 100px;
-    resize: none;
-    font-size: 16px;
-}
-
-.feedback-form button {
-    padding: 10px 20px;
-    background-color: var(--main-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.feedback-form button:hover {
-    background-color: #0056b3;
-}
-
 
 
 </style>
@@ -383,18 +346,6 @@
     <div class="chat-box">
         <!-- Les messages vont s'afficher ici -->
     </div>
-    <form class="chat-form" id="chat-form">
-        <input type="text" id="chat-input" placeholder="Your message..." required />
-        <button type="submit">Send</button>
-    </form>
-</section>
-<section class="feedback-form">
-    <h3>Give us your feedback</h3>
-    <form action="submit_feedback.php" method="POST">
-        <textarea name="feedback" placeholder="Enter your feedback..." required></textarea>
-        <button type="submit">Submit Feedback</button>
-    </form>
-</section>
 <section class="footer">
   <div class="box-container">
     <div class="box">
@@ -478,46 +429,6 @@ var swiper = new Swiper(".reviews-slider", {
     // Charger les avis au chargement de la page
     document.addEventListener('DOMContentLoaded', fetchReviews);
 </script>
-<script>
-document.getElementById("chat-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-    
-    // Get the message input
-    const messageInput = document.getElementById("chat-input");
-    const messageText = messageInput.value.trim();
-
-    // Check if the input is empty
-    if (messageText === "") return;
-
-    // Create user message
-    const userMessage = document.createElement("div");
-    userMessage.classList.add("chat-bubble", "user-message");
-    userMessage.textContent = messageText;
-
-    // Append the user's message to the chat box
-    const chatBox = document.querySelector(".chat-box");
-    chatBox.appendChild(userMessage);
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
-
-    // Clear input field
-    messageInput.value = "";
-
-    // Simulate a bot response
-    setTimeout(() => {
-        const botMessage = document.createElement("div");
-        botMessage.classList.add("chat-bubble", "bot-message");
-        botMessage.textContent = "Thank you for your message! We'll get back to you shortly.";
-
-        // Append the bot's message to the chat box
-        chatBox.appendChild(botMessage);
-        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
-    }, 1000);
-})
-
-
-</script>
-
-
 
 <script src="script.js"></script>
 <?php
