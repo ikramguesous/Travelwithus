@@ -23,10 +23,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_reviews'])) {
         // Connexion à la base de données
         $conn = new mysqli($servername, $username, $password, $database, 3306);
 
-        // Vérification de la connexion
-        if ($conn->connect_error) {
-            throw new Exception("Connexion échouée : " . $conn->connect_error);
-        }
+       // Vérification de la connexion
+if ($conn->connect_error) {
+    echo "Erreur de connexion : " . $conn->connect_error;
+    exit;
+} else {
+    echo "Connexion réussie !";  // Message de confirmation
+}
+
 
         // Préparer la requête d'insertion avec des paramètres liés
         $stmt = $conn->prepare("INSERT INTO reviews (client_name, review_text, stars, client_image) 
