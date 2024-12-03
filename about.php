@@ -201,12 +201,12 @@
 }
 /* Style for the review form */
 .review-form {
+  display: none;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .review-form textarea {
   width: 100%;
   height: 100px;
@@ -380,14 +380,15 @@ var swiper = new Swiper(".reviews-slider", {
 </script>
 <script>
   function toggleReviewForm() {
-    var form = document.getElementById('review-form');
-    if (form.style.display === "none") {
+    var form = document.querySelector('.review-form');
+    if (form.style.display === "none" || form.style.display === "") {
       form.style.display = "block"; // Show form
     } else {
       form.style.display = "none"; // Hide form
     }
   }
 </script>
+
 
 <script>
     async function fetchReviews() {
