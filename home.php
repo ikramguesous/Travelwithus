@@ -134,8 +134,8 @@
         </div>
     </div>
     <div class="see-more-btn">
-        <a href="package.php" class="btn">See More</a>
-    </div>
+    <a href="package.php" class="btn" style="padding: 15px 30px; font-size: 18px;">See More</a>
+</div>
 </section>
 
 
