@@ -6,12 +6,16 @@ $password = 'Poisson2002';
 $database = 'ma_base';
 $connection = mysqli_connect($host, $username, $password, $database);
 
-// Récupérer l'ID du package depuis l'URL
+// Vérifier si le package_id est passé dans l'URL
 $package_id = isset($_GET['package_id']) ? intval($_GET['package_id']) : null;
 
-// Vérifier si l'ID est défini
+// Si aucun package_id n'est défini, afficher une alerte et rediriger
 if (!$package_id) {
-    die('Invalid package ID');
+    echo "<script>
+            alert('Please select a package before booking.');
+            window.location.href = 'package.php'; // Redirection vers la page des packages
+          </script>";
+    exit; // Arrêter l'exécution du script
 }
 
 // Récupérer les détails du package, y compris la disponibilité
@@ -63,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
