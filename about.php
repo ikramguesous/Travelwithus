@@ -318,7 +318,7 @@
 
   <!-- Hidden review form -->
   <div class="review-form" id="review-form" style="display:none;">
-    <form method="POST" action="submit_review.php">
+    <form method="POST" action="submit_reviews.php">
       <textarea name="review_text" placeholder="Write your review here..." required></textarea>
       <button type="submit" name="submit_review">Submit</button>
     </form>
