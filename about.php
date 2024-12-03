@@ -199,6 +199,62 @@
 .chat-form button:hover {
     background-color: var(--main-color);
 }
+/* Style for the review form */
+.review-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.review-form textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.review-form button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.review-form button:hover {
+  background-color: #45a049;
+}
+
+.open-form-btn {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.open-form-btn:hover {
+  background-color: #0056b3;
+}
+
+.close-form-btn {
+  background-color: #f44336;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-form-btn:hover {
+  background-color: #d32f2f;
+}
+
 
 </style>
   
@@ -257,9 +313,18 @@
       <?php include 'fetch_reviews.php'; ?>
     </div>
   </div>
+  <!-- Button to open review form -->
+  <button class="open-form-btn" onclick="toggleReviewForm()">Give Your Review</button>
+
+  <!-- Hidden review form -->
+  <div class="review-form" id="review-form" style="display:none;">
+    <form method="POST" action="submit_review.php">
+      <textarea name="review_text" placeholder="Write your review here..." required></textarea>
+      <button type="submit" name="submit_review">Submit</button>
+    </form>
+    <button class="close-form-btn" onclick="toggleReviewForm()">Close</button>
+  </div>
 </section>
-
-
 <section class="footer">
   <div class="box-container">
     <div class="box">
@@ -304,6 +369,17 @@ var swiper = new Swiper(".reviews-slider", {
 });
 
 </script>
+<script>
+  function toggleReviewForm() {
+    var form = document.getElementById('review-form');
+    if (form.style.display === "none") {
+      form.style.display = "block"; // Show form
+    } else {
+      form.style.display = "none"; // Hide form
+    }
+  }
+</script>
+
 <script>
     async function fetchReviews() {
         try {
@@ -415,10 +491,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Send</button>
     </form>
 </div>
-
-
-
-
 </body>
-
 </html>
