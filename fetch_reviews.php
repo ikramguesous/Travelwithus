@@ -1,13 +1,14 @@
 <?php
 // Paramètres de connexion à la base de données Azure
-$servername = "serveurmysql.mysql.database.azure.com"; // Exemple: myserver.mysql.database.azure.com
-$username = "Ikram_Guessous"; // Exemple: admin@myserver
+$servername = "serveurmysql.mysql.database.azure.com";
+$username = "Ikram_Guessous";
 $password = "Poisson2002";
 $database = "ma_base";
 
 try {
     // Connexion à la base de données MySQL
-    $conn = new mysqli($servername, $username, $password, $database);
+    $port = 3306;
+    $conn = new mysqli($servername, $username, $password, $database, $port);
 
     // Vérification de la connexion
     if ($conn->connect_error) {
@@ -15,7 +16,7 @@ try {
     }
 
     // Requête pour récupérer les avis
-    $query = "SELECT name, review, rating, image FROM reviews";
+    $query = "SELECT client_name AS name, review_text AS review, stars AS rating, client_image AS image FROM reviews";
     $result = $conn->query($query);
 
     if (!$result) {
