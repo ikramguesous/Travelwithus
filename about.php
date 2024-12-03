@@ -257,6 +257,22 @@
       <?php include 'fetch_reviews.php'; ?>
     </div>
   </div>
+  <form action="submit_reviews.php" method="POST" enctype="multipart/form-data">
+    <label for="name">Nom :</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="review">Avis :</label>
+    <textarea id="review" name="review" required></textarea><br><br>
+
+    <label for="rating">Évaluation (1 à 5 étoiles) :</label>
+    <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
+
+    <label for="image">Image (facultative) :</label>
+    <input type="file" id="image" name="image"><br><br>
+
+    <button type="submit">Envoyer l'avis</button>
+</form>
+
   </section>
 
 <section class="footer">
