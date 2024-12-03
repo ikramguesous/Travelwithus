@@ -1,3 +1,70 @@
+<?php
+// Configuration de la base de données
+$host = 'serveurmysql.mysql.database.azure.com'; // Exemple : localhost
+$username = 'Ikram_Guessous';
+$password = 'Poisson2002';
+$database = 'ma_base';
+$connection = mysqli_connect($host, $username, $password, $database);
+
+// Récupérer l'ID du package depuis l'URL
+$package_id = isset($_GET['package_id']) ? intval($_GET['package_id']) : null;
+
+// Vérifier si l'ID est défini
+if (!$package_id) {
+    die('Invalid package ID');
+}
+
+// Récupérer les détails du package, y compris la disponibilité
+$query = "SELECT * FROM packages WHERE id_package = ?";
+$stmt = mysqli_prepare($connection, $query);
+mysqli_stmt_bind_param($stmt, 'i', $package_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+// Vérifier si le package existe
+if (mysqli_num_rows($result) == 0) {
+    die('Package not found');
+}
+
+$package = mysqli_fetch_assoc($result);
+$availability_date = $package['availability_date'];
+$places_available = $package['places_available']; // Nombre de places disponibles
+
+// Gérer la soumission du formulaire de réservation
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = isset($_POST['name']) ? mysqli_real_escape_string($connection, $_POST['name']) : '';
+    $email = isset($_POST['email']) ? mysqli_real_escape_string($connection, $_POST['email']) : '';
+    $phone = isset($_POST['phone']) ? mysqli_real_escape_string($connection, $_POST['phone']) : '';
+    $date = $availability_date;
+
+    // Validation basique des champs
+    if (empty($name) || empty($email) || empty($phone)) {
+        $error_message = 'All fields are required!';
+    } elseif ($places_available <= 0) {
+        $error_message = 'Sorry, no places available for this package!';
+    } else {
+        // Insérer la réservation dans la base de données
+        $query = "INSERT INTO booking (package_id, name, email, phone, booking_date) VALUES (?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($connection, $query);
+        mysqli_stmt_bind_param($stmt, 'issss', $package_id, $name, $email, $phone, $date);
+        $success = mysqli_stmt_execute($stmt);
+
+        if ($success) {
+            // Mettre à jour le nombre de places disponibles
+            $query = "UPDATE packages SET places_available = places_available - 1 WHERE id_package = ?";
+            $stmt = mysqli_prepare($connection, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $package_id);
+            mysqli_stmt_execute($stmt);
+
+            $success_message = 'Your booking has been successfully made!';
+        } else {
+            $error_message = 'Failed to make a booking. Please try again.';
+        }
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,24 +75,95 @@
   <title>home</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
   <link rel="stylesheet" href="style.css?v=1.0">
-  <style>
-  .heading{
-    background-size: cover !important;
-    background-position: center !important;
-    padding-top: 8rem;
-    padding-bottom: 13rem;
-    height:500px;
-    
-}
-.heading h1{
-    font-size: 8rem;
-    text-transform: uppercase;
-    color: var(--white);
-    text-shadow: var(--text-shadow);
-}
-</style>
-</head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .package-details {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .package-details img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .package-details h2 {
+            color: #333;
+            margin-top: 15px;
+        }
+
+        .package-details p {
+            color: #666;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        form .form-group {
+            margin-bottom: 15px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .message.success {
+            color: green;
+        }
+
+        .message.error {
+            color: red;
+        }
+    </style>
+</head>
 <body>
 <section class="header">
   <a href="home.php" class="logo">Travel With Us</a>
@@ -42,45 +180,49 @@
   
 </div>
 
-<section class="booking">
-    <h1 class="heading-title">Book you Trip  </h1>
-    <form action="book_form.php" method="post" class="book-form">
-        <div class="flex">
-            <div class="inputBox">
-                <span>Name :</span>
-                <input type="text" placeholder="enter your name" name="name">
-            </div>
-            <div class="inputBox">
-                <span>Email:</span>
-                <input type="email" placeholder="enter your email" name="email"> 
-          </div>
-          <div class="inputBox">
-                <span>Phone :</span>
-                <input type="number" placeholder="enter your number" name="phone"> 
-          </div>
-          <div class="inputBox">
-                <span>Adress :</span>
-                <input type="text" placeholder="enter your address" name="address"> 
-          </div>
-          <div class="inputBox">
-                <span>Where To :</span>
-                <input type="text" placeholder="place you want to visit" name="location"> 
-          </div>
-          <div class="inputBox">
-                <span>How Many :</span>
-                <input type="number" placeholder="number of guests" name="guests"> 
-          </div>
+<div class="container">
+    <h1>Book Your Package</h1>
+
+    <!-- Affichage des détails du package -->
+    <div class="package-details">
+        <img src="images/<?php echo htmlspecialchars($package['image']); ?>" alt="<?php echo htmlspecialchars($package['name']); ?>">
+        <h2><?php echo htmlspecialchars($package['name']); ?></h2>
+        <p><?php echo htmlspecialchars($package['description']); ?></p>
+        <p><strong>Price: $<?php echo number_format($package['price'], 2); ?></strong></p>
+    </div>
+
+    <!-- Formulaire de réservation -->
+    <form action="book.php?package_id=<?php echo urlencode($package_id); ?>" method="POST">
+        <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" required>
         </div>
-      
-        <input type="submit" value="submit" class="btn" name="send">
+
+        <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Your Phone</label>
+            <input type="text" id="phone" name="phone" required>
+        </div>
+
+        <div class="form-group">
+            <label for="date">Booking Date</label>
+            <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($availability_date); ?>" readonly>
+        </div>
+
+        <button type="submit">Book Now</button>
     </form>
-</section>
 
-
-
-
-
-
+    <!-- Affichage des messages -->
+    <?php if (isset($success_message)): ?>
+        <div class="message success"><?php echo htmlspecialchars($success_message); ?></div>
+    <?php elseif (isset($error_message)): ?>
+        <div class="message error"><?php echo htmlspecialchars($error_message); ?></div>
+    <?php endif; ?>
+</div>
 <section class="footer">
   <div class="box-container">
     <div class="box">
@@ -106,25 +248,8 @@
     </div>
   </div>
 </section>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<script>
-  const swiper = new Swiper('.home-slider', {
-    loop: true, // Permet un défilement en boucle
-    autoplay: {
-        delay: 3000, // Temps d'attente en millisecondes entre les swipes
-        disableOnInteraction: false, // Continue de swiper même après une interaction de l'utilisateur
-    },
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-    },
-});
-</script>
 </body>
-
 </html>
+
+
+
