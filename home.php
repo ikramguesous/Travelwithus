@@ -137,13 +137,7 @@
         <a href="package.php" class="btn">See More</a>
     </div>
 </section>
-<section class="home-offer">
-  <div class="content">
-    <h3>up to 50% off</h3>
-    <p>Book your dream adventure today and enjoy exclusive discounts!</p>
-    <a href="book.php" class="btn">Book Now</a>
-  </div>
-</section>
+
 
 <section class="footer">
   <div class="box-container">
