@@ -257,6 +257,7 @@
       <?php include 'fetch_reviews.php'; ?>
     </div>
   </div>
+  </section>
 
 <section class="footer">
   <div class="box-container">
