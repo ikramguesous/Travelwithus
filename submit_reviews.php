@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_reviews'])) {
 
         // Requête d'insertion de l'avis
         $query = "INSERT INTO reviews (client_name, review_text, stars, client_image) 
-                  VALUES ('$name', '$review_text', $stars, '$image')";
+          VALUES ('$name', '$review_text', $stars, '$image')";
 
         if (mysqli_query($conn, $query)) {
             echo "Avis ajouté avec succès!";
