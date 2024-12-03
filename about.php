@@ -217,16 +217,17 @@
 }
 
 .review-form button {
-  background-color: #4CAF50;
+  background-color:var(--main-color);
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  position:center;
 }
 
 .review-form button:hover {
-  background-color: #45a049;
+  background-color: var(--main-color);
 }
 
 .open-form-btn {
