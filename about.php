@@ -258,6 +258,44 @@
     </div>
   </div>
 </section>
+
+<!-- Bouton pour déclencher le formulaire -->
+<div style="text-align: center; margin-top: 20px;">
+  <button id="openModal">Give Us Your Review</button>
+</div>
+
+<!-- Boîte modale -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h3>Give us your review</h3>
+    <form method="POST" action="fetch_reviews.php">
+      <div>
+        <label for="name">Nom:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label for="stars">Étoiles:</label>
+        <select id="stars" name="stars" required>
+          <option value="5">⭐⭐⭐⭐⭐</option>
+          <option value="4">⭐⭐⭐⭐</option>
+          <option value="3">⭐⭐⭐</option>
+          <option value="2">⭐⭐</option>
+          <option value="1">⭐</option>
+        </select>
+      </div>
+      <div>
+        <label for="review">Avis:</label>
+        <textarea id="review" name="review" rows="4" required></textarea>
+      </div>
+      <div>
+        <button type="submit">Envoyer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 <section class="footer">
   <div class="box-container">
     <div class="box">
@@ -302,6 +340,70 @@ var swiper = new Swiper(".reviews-slider", {
 });
 
 </script>
+<script>
+  // Récupération des éléments
+  const modal = document.getElementById('modal');
+  const openModalBtn = document.getElementById('openModal');
+  const closeModalBtn = document.getElementById('closeModal');
+
+  // Ouvrir la modale
+  openModalBtn.addEventListener('click', () => {
+    modal.style.display = 'flex';
+  });
+
+  // Fermer la modale
+  closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  // Fermer la modale en cliquant en dehors
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+<script>
+    async function fetchReviews() {
+        try {
+            const response = await fetch('fetch_reviews.php');
+            const reviews = await response.json();
+
+            const reviewsContainer = document.querySelector('.swiper-wrapper');
+            reviewsContainer.innerHTML = ''; // Efface les anciens avis
+
+            reviews.forEach(review => {
+                const stars = '<i class="fas fa-star"></i>'.repeat(review.stars);
+                
+                const reviewHTML = `
+                    <div class="swiper-slide slide">
+                        <div class="stars">
+                            ${stars}
+                        </div>
+                        <p><em>"${review.review_text}"</em></p>
+                        <h3>${review.client_name}</h3>
+                        <span>${review.client_role}</span>
+                        <img src="${review.client_image}" alt="">
+                    </div>
+                `;
+                reviewsContainer.innerHTML += reviewHTML;
+            });
+
+            // Initialiser ou réinitialiser Swiper
+            const swiper = new Swiper('.reviews-slider', {
+                loop: true,
+                autoplay: { delay: 5000 },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            });
+        } catch (error) {
+            console.error('Erreur lors de la récupération des avis :', error);
+        }
+    }
+
+    // Charger les avis au chargement de la page
+    document.addEventListener('DOMContentLoaded', fetchReviews);
+</script>
+
 
 <script src="script.js"></script>
 <?php
