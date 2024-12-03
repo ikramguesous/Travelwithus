@@ -199,63 +199,6 @@
 .chat-form button:hover {
     background-color: var(--main-color);
 }
-/* Style for the review form */
-.review-form {
-  display: none;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.review-form textarea {
-  width: 100%;
-  height: 100px;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.review-form button {
-  background-color:var(--main-color);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  position:center;
-}
-
-.review-form button:hover {
-  background-color: var(--main-color);
-}
-
-.open-form-btn {
-  background-color: #007BFF;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.open-form-btn:hover {
-  background-color: #0056b3;
-}
-
-.close-form-btn {
-  background-color: #f44336;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.close-form-btn:hover {
-  background-color: #d32f2f;
-}
-
 
 </style>
   
@@ -314,28 +257,7 @@
       <?php include 'fetch_reviews.php'; ?>
     </div>
   </div>
-  <!-- Button to open review form -->
-  <button class="open-form-btn" onclick="toggleReviewForm()">Give Your Review</button>
 
-  <!-- Hidden review form -->
-  <div class="review-form">
-  <form method="POST" action="submit_reviews.php">
-    <input type="text" name="client_name" placeholder="Your Name" required><br>
-    <textarea name="review_text" placeholder="Write your review..." required></textarea><br>
-    <label for="rating">Rating:</label>
-    <select name="rating" required>
-      <option value="1">1 Star</option>
-      <option value="2">2 Stars</option>
-      <option value="3">3 Stars</option>
-      <option value="4">4 Stars</option>
-      <option value="5">5 Stars</option>
-    </select><br>
-    <input type="text" name="client_image" placeholder="Image URL (optional)"><br>
-    <button type="submit" name="submit_reviews">Submit Review</button>
-
-  </form>
-</div>
-</section>
 <section class="footer">
   <div class="box-container">
     <div class="box">
@@ -380,17 +302,6 @@ var swiper = new Swiper(".reviews-slider", {
 });
 
 </script>
-<script>
-  function toggleReviewForm() {
-    var form = document.querySelector('.review-form');
-    if (form.style.display === "none" || form.style.display === "") {
-      form.style.display = "block"; // Show form
-    } else {
-      form.style.display = "none"; // Hide form
-    }
-  }
-</script>
-
 
 <script>
     async function fetchReviews() {
