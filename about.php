@@ -199,6 +199,63 @@
 .chat-form button:hover {
     background-color: var(--main-color);
 }
+.reviews {
+  text-align: center;
+}
+
+/* Style du bouton */
+.open-form-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 20px 0;
+  border-radius: 5px;
+}
+
+.open-form-btn:hover {
+  background-color: #45a049;
+}
+
+/* Style pour la boîte modale */
+.modal {
+  display: none; /* Caché par défaut */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Contenu de la boîte modale */
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Bouton pour fermer */
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+}
 
 </style>
   
@@ -258,23 +315,32 @@
       <?php include 'fetch_reviews.php'; ?>
     </div>
   </div>
-  <form action="submit_reviews.php" method="POST" enctype="multipart/form-data">
-    <label for="name">Nom :</label>
-    <input type="text" id="name" name="name" required><br><br>
 
-    <label for="review">Avis :</label>
-    <textarea id="review" name="review" required></textarea><br><br>
+  <!-- Bouton pour ouvrir le formulaire -->
+  <button class="open-form-btn">Laisser un avis</button>
 
-    <label for="rating">Évaluation (1 à 5 étoiles) :</label>
-    <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
+  <!-- Formulaire en tant que boîte modale -->
+  <div class="modal" id="review-modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <form action="submit_reviews.php" method="POST" enctype="multipart/form-data">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name" required><br><br>
 
-    <label for="image">Image (facultative) :</label>
-    <input type="file" id="image" name="image"><br><br>
+        <label for="review">Avis :</label>
+        <textarea id="review" name="review" required></textarea><br><br>
 
-    <button type="submit">Envoyer l'avis</button>
-</form>
+        <label for="rating">Évaluation (1 à 5 étoiles) :</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
 
-  </section>
+        <label for="image">Image (facultative) :</label>
+        <input type="file" id="image" name="image"><br><br>
+
+        <button type="submit">Envoyer l'avis</button>
+      </form>
+    </div>
+  </div>
+</section>
 
 <section class="footer">
   <div class="box-container">
@@ -360,6 +426,30 @@ var swiper = new Swiper(".reviews-slider", {
     // Charger les avis au chargement de la page
     document.addEventListener('DOMContentLoaded', fetchReviews);
 </script>
+<script>
+  // Sélectionner les éléments
+  const modal = document.getElementById('review-modal');
+  const openBtn = document.querySelector('.open-form-btn');
+  const closeBtn = document.querySelector('.close-btn');
+
+  // Ouvrir la modale
+  openBtn.addEventListener('click', () => {
+    modal.style.display = 'block';
+  });
+
+  // Fermer la modale
+  closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  // Fermer la modale en cliquant à l'extérieur
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+
 
 
 <script src="script.js"></script>
