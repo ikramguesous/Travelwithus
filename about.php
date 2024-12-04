@@ -205,7 +205,7 @@
 
 /* Style du bouton */
 .open-form-btn {
-  background-color: #4CAF50;
+  background-color:var(--main-color);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -216,7 +216,7 @@
 }
 
 .open-form-btn:hover {
-  background-color: #45a049;
+  background-color:var(--main-color);
 }
 
 /* Style pour la boîte modale */
@@ -236,10 +236,10 @@
 .modal-content {
   background-color: #fff;
   margin: 15% auto;
-  padding: 20px;
+  padding: 15px;
   border: 1px solid #888;
-  width: 50%;
-  border-radius: 10px;
+  width: 30px;
+  border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -317,26 +317,26 @@
   </div>
 
   <!-- Bouton pour ouvrir le formulaire -->
-  <button class="open-form-btn">Laisser un avis</button>
+  <button class="open-form-btn">Give Us Your Review</button>
 
   <!-- Formulaire en tant que boîte modale -->
   <div class="modal" id="review-modal">
     <div class="modal-content">
       <span class="close-btn">&times;</span>
       <form action="submit_reviews.php" method="POST" enctype="multipart/form-data">
-        <label for="name">Nom :</label>
+        <label for="name">Name :</label>
         <input type="text" id="name" name="name" required><br><br>
 
-        <label for="review">Avis :</label>
+        <label for="review">Review :</label>
         <textarea id="review" name="review" required></textarea><br><br>
 
-        <label for="rating">Évaluation (1 à 5 étoiles) :</label>
+        <label for="rating">Rating :</label>
         <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
 
-        <label for="image">Image (facultative) :</label>
+        <label for="image">Picture :</label>
         <input type="file" id="image" name="image"><br><br>
 
-        <button type="submit">Envoyer l'avis</button>
+        <button type="submit">Send</button>
       </form>
     </div>
   </div>
@@ -426,13 +426,14 @@ var swiper = new Swiper(".reviews-slider", {
     // Charger les avis au chargement de la page
     document.addEventListener('DOMContentLoaded', fetchReviews);
 </script>
+
 <script>
-  // Sélectionner les éléments
+  /
   const modal = document.getElementById('review-modal');
   const openBtn = document.querySelector('.open-form-btn');
   const closeBtn = document.querySelector('.close-btn');
 
-  // Ouvrir la modale
+  
   openBtn.addEventListener('click', () => {
     modal.style.display = 'block';
   });
