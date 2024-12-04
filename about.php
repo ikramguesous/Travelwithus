@@ -205,7 +205,7 @@
 
 /* Style du bouton */
 .open-form-btn {
-  background-color:var(--main-color);
+  background-color: var(--main-color);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -236,10 +236,10 @@
 .modal-content {
   background-color: #fff;
   margin: 15% auto;
-  padding: 15px;
+  padding: 20px;
   border: 1px solid #888;
-  width: 400px;
-  border-radius: 20px;
+  width: 50%;
+  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -426,14 +426,13 @@ var swiper = new Swiper(".reviews-slider", {
     // Charger les avis au chargement de la page
     document.addEventListener('DOMContentLoaded', fetchReviews);
 </script>
-
 <script>
-  /
+  // Sélectionner les éléments
   const modal = document.getElementById('review-modal');
   const openBtn = document.querySelector('.open-form-btn');
   const closeBtn = document.querySelector('.close-btn');
 
-  
+  // Ouvrir la modale
   openBtn.addEventListener('click', () => {
     modal.style.display = 'block';
   });
