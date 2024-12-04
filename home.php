@@ -96,10 +96,11 @@
         <img src="images/pexels-harriet-b-392993362-17115609.jpg" alt="">
     </div>
     <div class="content">
-        <h3>About us</h3>
-        <p>Explore Morocco, a land of diverse landscapes and rich culture. From desert dunes to the Atlas Mountains, enjoy unforgettable adventures and unique experiences.</p>
-        <a href="about.php" class="btn">Read More</a>
-    </div>
+    <h3>About us</h3>
+    <p>We are a travel agency specializing in organizing guided tours across various cities in Morocco. Whether you're exploring the vibrant souks of Marrakech, the historic streets of Fez, or the coastal beauty of Essaouira, we ensure unforgettable experiences tailored to your needs.</p>
+    <a href="about.php" class="btn">Read More</a>
+</div>
+
 </section>
 
 <section class="home-packages">
