@@ -229,18 +229,33 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6); /* Légèrement plus sombre */
+  backdrop-filter: blur(5px); /* Effet de flou pour l'arrière-plan */
 }
 
 /* Contenu de la boîte modale */
 .modal-content {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 50%;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #fefefe; /* Couleur blanche légèrement adoucie */
+  margin: 10% auto; /* Plus près du haut de l'écran */
+  padding: 30px; /* Espacement plus généreux */
+  border: none; /* Suppression de la bordure */
+  width: 60%; /* Taille légèrement plus grande */
+  max-width: 600px; /* Taille maximale pour petits écrans */
+  border-radius: 15px; /* Bordures plus arrondies */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Ombre plus douce et profonde */
+  animation: slide-in 0.3s ease-out; /* Animation d'apparition */
+}
+
+/* Animation pour faire glisser la boîte */
+@keyframes slide-in {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Bouton pour fermer */
