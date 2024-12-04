@@ -238,7 +238,7 @@
   margin: 15% auto;
   padding: 15px;
   border: 1px solid #888;
-  width: 30px;
+  width: 400px;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
