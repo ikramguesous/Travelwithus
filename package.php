@@ -189,6 +189,9 @@ mysqli_close($connection);
                     <a href="book.php?package_id=<?php echo urlencode($row['id_package']); ?>" style="text-decoration: none;">
                         <button type="button">Book Now</button>
                     </a>
+                    <a href="details.php?package_id=<?php echo urlencode($row['id_package']); ?>" style="text-decoration: none;">
+                        <button type="button">Read More</button>
+                    </a>
                 <?php elseif ($placesRestantes <= 0): ?>
                     <p class="unavailable">Sold Out</p>
                 <?php else: ?>
